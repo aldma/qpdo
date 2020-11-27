@@ -1,0 +1,8 @@
+QPDO
+Copyright (c) 2020 Alberto De Marchi
+
+The following external modules are included in this software library:
+
+* LAPACK: authored by The University of Tennessee and The University of Tennessee Research Foundation, The University of California Berkeley, and The University of Colorado Denver, and licensed under BSD-3, see [lapack/LICENSE](https://github.com/Reference-LAPACK/lapack/blob/master/LICENSE).
+
+* Suitesparse: (mainly) authored by Tim Davis. Each of its modules is licensed separately, see [suitesparse/LICENSE.txt](https://github.com/DrTimothyAldenDavis/SuiteSparse/blob/master/LICENSE.txt). In particular, QPDO requires CHOLMOD, AMD, COLAMD, CCOLAMD, CAMD; optionally METIS.
