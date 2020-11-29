@@ -22,7 +22,7 @@ git submodule update --init --recursive
 * To install the mex interface of QPDO, add QPDO and its subfolders to the MATLAB path. Then go to [interfaces/mex/](./interfaces/mex/) and run `qpdo_make.m`. You can test and see how to call QPDO from MATLAB using `demo_mex.m` in the [examples/](./examples) folder.
 
 ## The Good and the Bad
-Although this software package is still in its infancy, don't hesitate to [share with me](mailto:alberto.demarchi@unibw.de) your impression! Would you like to collaborate to build better software? I'm on board! Reporting mistakes is also very useful, and all types of issues are welcome, including bug reports, typos, and feature requests.
+Although this software package is still in its infancy, don't hesitate to [share with me](mailto:aldmarchi@gmail.com) your impression! Would you like to collaborate to build better software? I'm on board! Reporting mistakes is also very useful, and all types of issues are welcome, including bug reports, typos, and feature requests.
 
 ## Benchmarks
 We are currently benchmarking QPDO against [OSQP](https://github.com/oxfordcontrol/osqp) and [QPALM](https://github.com/Benny44/QPALM), looking forward to sharing the results.
