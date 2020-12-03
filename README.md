@@ -15,6 +15,7 @@ QPDO is implemented in C and provides a MATLAB interface via mex.
 Clone this repository with the submodule for SuiteSparse, running
 ```
 git clone https://github.com/aldma/qpdo.git
+cd qpdo
 git submodule update --init --recursive
 ```
 
