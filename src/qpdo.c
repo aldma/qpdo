@@ -344,8 +344,9 @@ void qpdo_solve(QPDOWorkspace *work) {
         compute_outer_residuals(work, c);
         compute_outer_residuals_norm(work);
 
-        // dx = x - xbar
+        // dx = x - xbar, dy = y - ybar
         vec_add_scaled(work->x, work->xbar, work->dx, -1, n);
+        vec_add_scaled(work->y, work->ybar, work->dy, -1, m);
 
         // compute inner residuals and norm
         compute_inner_residuals(work, c);
@@ -361,6 +362,13 @@ void qpdo_solve(QPDOWorkspace *work) {
         // check optimality
         if (check_outer_optimality(work)) {
             break; // problem solved
+        }
+
+        // check infeasibility
+        if (is_primal_infeasible(work)) {
+            break;
+        } else if (is_dual_infeasible(work)) {
+            break;
         }
 
         if (((iter > iter_old + 1) && check_inner_optimality(work)) || (iter == iter_old + work->settings->inner_max_iter)) {

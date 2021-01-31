@@ -17,6 +17,10 @@ void compute_outer_residuals_norm(QPDOWorkspace *work);
 
 void store_solution(QPDOWorkspace *work);
 
+c_int is_primal_infeasible(QPDOWorkspace *work);
+
+c_int is_dual_infeasible(QPDOWorkspace *work);
+
 # ifdef __cplusplus
 }
 # endif
