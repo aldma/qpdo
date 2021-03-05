@@ -8,6 +8,19 @@ subject to      l <= A x <= u
 ```
 where `x in R^n` is the decision variable. The symmetric positive semidefinite matrix `Q in S_+^n`, the vector `q in R^n`, and the matrix `A in R^{m x n}` are bounded. The vectors `l in R^m U {-inf}^m` and `u in R^m U {+inf}^m` are extended-real-valued and satisfy `l_i ⩽ u_i` for all `i in 1,...,m`.
 
+## Method and Citing
+QPDO implements a primal-dual Newton proximal method for convex quadratic programming. Details can be found in the [research paper](https://aldma.github.io/bib/2020_DeMarchi_QPDO.pdf), currently under review. The preprint is freely available [here](https://doi.org/10.13140/RG.2.2.33215.12964), and serves as a user manual for advanced users. If you use QPDO in your work, we kindly ask that you cite the following reference.
+```
+@article{qpdo,
+	author      = {De~Marchi, Alberto},
+	title       = {On a Primal-Dual Newton Proximal Method for Convex Quadratic Programs},
+  journal     = {Preprint}, 
+	year        = {2020},
+	month       = {12},
+	doi         = {10.13140/RG.2.2.33215.12964},
+  note        = {Submitted},
+}
+```
 
 ## Installation
 QPDO is implemented in C and provides a MATLAB interface via mex.
