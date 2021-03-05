@@ -14,11 +14,11 @@ QPDO implements a primal-dual Newton proximal method for convex quadratic progra
 @article{qpdo,
 	author      = {De~Marchi, Alberto},
 	title       = {On a Primal-Dual Newton Proximal Method for Convex Quadratic Programs},
-  journal     = {Preprint}, 
+	journal     = {Preprint}, 
 	year        = {2020},
 	month       = {12},
 	doi         = {10.13140/RG.2.2.33215.12964},
-  note        = {Submitted},
+	note        = {Submitted},
 }
 ```
 
