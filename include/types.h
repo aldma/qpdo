@@ -99,6 +99,8 @@ typedef struct {
   c_int   inner_max_iter;           // maximum number of inner iterations
   c_float eps_abs;                  // absolute tolerance
   c_float eps_abs_in;               // initial inner absolute tolerance
+  c_float eps_prim_inf;             // primal infeasibility tolerance
+  c_float eps_dual_inf;             // dual infeasibility tolerance
   c_float rho;                      // inner tolerance shrink factor
   c_float theta;                    // penalty update check factor
   c_float delta;                    // penalty update shrink factor

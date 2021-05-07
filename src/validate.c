@@ -68,6 +68,20 @@ c_int validate_settings(const QPDOSettings *settings) {
     return FALSE;
   }
 
+  if (settings->eps_prim_inf < 0) {
+# ifdef PRINTING
+    c_eprint("eps_prim_inf must be nonnegative");
+# endif /* ifdef PRINTING */
+    return FALSE;
+  }
+
+  if (settings->eps_dual_inf < 0) {
+# ifdef PRINTING
+    c_eprint("eps_dual_inf must be nonnegative");
+# endif /* ifdef PRINTING */
+    return FALSE;
+  }
+
   if (settings->rho <= 0 || settings->rho >= 1) {
 # ifdef PRINTING
     c_eprint("rho must be positive and smaller than 1");

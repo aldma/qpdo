@@ -38,7 +38,7 @@ void exact_linesearch(QPDOWorkspace *work, cholmod_common *c) {
     vec_ew_prod(work->temp_m, work->sqrt_mu, work->temp_m, m); // (u - c1) ./ sqrt(mu)
     prea_vec_copy(work->temp_m, work->ls_alpha + m, m);
     // quit with full step if directional derivative at tau=1 is suff. small
-    // // 0.5 * psi^prime( 1 ) = eta + beta + delta' * [delta - alpha]_+
+    // 0.5 * psi^prime( 1 ) = eta + beta + delta' * [delta - alpha]_+
     vec_add_scaled(work->ls_delta, work->ls_alpha, work->temp_2m, -1, m*2);
     size_t i;
     for (i = 0; i < m*2; i++) {
@@ -47,16 +47,8 @@ void exact_linesearch(QPDOWorkspace *work, cholmod_common *c) {
     c_float psi_one = vec_prod(work->ls_delta, work->temp_2m, m*2);
     psi_one += work->ls_eta;
     psi_one += work->ls_beta;
-    if (c_absval(psi_one) <= 1e-12) {
-        return work->tau = 1.0;
-    }
     // piecewise-affine linesearch
     pwa_linesearch( work );
-    // strictly positive, not crazy stepsize
-    //work->tau = c_max( 1e-12, c_min( work->tau, 10.0 ) );
-    if (work->tau <= 1e-12) {
-        work->tau = 1.0;
-    }
 
     /*//========================= debug mode ============================//
     //=== for checking exact line search

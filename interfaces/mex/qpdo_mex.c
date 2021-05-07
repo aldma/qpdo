@@ -41,6 +41,8 @@ const char* QPDO_SETTINGS_FIELDS[] = {"max_iter",                   //c_int
                                       "max_time",                   //c_float
                                       "eps_abs",                    //c_float
                                       "eps_abs_in",                 //c_float
+                                      "eps_prim_inf",               //c_float
+                                      "eps_dual_inf",               //c_float
                                       "rho",                        //c_float
                                       "theta",                      //c_float
                                       "delta",                      //c_float
@@ -369,6 +371,8 @@ mxArray* copySettingsToMxStruct(QPDOSettings* settings){
     mxSetField(mxPtr, 0, "inner_max_iter",            mxCreateDoubleScalar(settings->inner_max_iter));
     mxSetField(mxPtr, 0, "eps_abs",                   mxCreateDoubleScalar(settings->eps_abs));
     mxSetField(mxPtr, 0, "eps_abs_in",                mxCreateDoubleScalar(settings->eps_abs_in));
+    mxSetField(mxPtr, 0, "eps_prim_inf",              mxCreateDoubleScalar(settings->eps_prim_inf));
+    mxSetField(mxPtr, 0, "eps_dual_inf",              mxCreateDoubleScalar(settings->eps_dual_inf));
     mxSetField(mxPtr, 0, "rho",                       mxCreateDoubleScalar(settings->rho));
     mxSetField(mxPtr, 0, "theta",                     mxCreateDoubleScalar(settings->theta));
     mxSetField(mxPtr, 0, "delta",                     mxCreateDoubleScalar(settings->delta));
@@ -399,6 +403,8 @@ void copyMxStructToSettings(const mxArray* mxPtr, QPDOSettings* settings){
     settings->inner_max_iter            = (c_int)mxGetScalar(mxGetField(mxPtr, 0, "inner_max_iter"));
     settings->eps_abs                   = (c_float)mxGetScalar(mxGetField(mxPtr, 0, "eps_abs"));
     settings->eps_abs_in                = (c_float)mxGetScalar(mxGetField(mxPtr, 0, "eps_abs_in"));
+    settings->eps_prim_inf              = (c_float)mxGetScalar(mxGetField(mxPtr, 0, "eps_prim_inf"));
+    settings->eps_dual_inf              = (c_float)mxGetScalar(mxGetField(mxPtr, 0, "eps_dual_inf"));
     settings->rho                       = (c_float)mxGetScalar(mxGetField(mxPtr, 0, "rho"));
     settings->theta                     = (c_float)mxGetScalar(mxGetField(mxPtr, 0, "theta"));
     settings->delta                     = (c_float)mxGetScalar(mxGetField(mxPtr, 0, "delta"));

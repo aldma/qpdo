@@ -27,6 +27,8 @@ void qpdo_set_default_settings(QPDOSettings *settings) {
     settings->inner_max_iter          = INNER_MAX_ITER;          /* maximum inner iterations */
     settings->eps_abs                 = (c_float)EPS_ABS;        /* outer absolute tolerance */
     settings->eps_abs_in              = (c_float)EPS_ABS_IN;     /* inner absolute tolerance */
+    settings->eps_prim_inf            = (c_float)EPS_PRIM_INF;   /* primal infeasibility tolerance */
+    settings->eps_dual_inf            = (c_float)EPS_DUAL_INF;   /* dual infeasibility tolerance */
     settings->rho                     = (c_float)RHO;            /* inner tolerance shrink factor */
     settings->theta                   = (c_float)THETA;          /* penalty update check factor */
     settings->delta                   = (c_float)DELTA;          /* penalty update shrink factor */
@@ -344,9 +346,6 @@ void qpdo_solve(QPDOWorkspace *work) {
         compute_outer_residuals(work, c);
         compute_outer_residuals_norm(work);
 
-        // dx = x - xbar, dy = y - ybar
-        vec_add_scaled(work->x, work->xbar, work->dx, -1, n);
-        vec_add_scaled(work->y, work->ybar, work->dy, -1, m);
 
         // compute inner residuals and norm
         compute_inner_residuals(work, c);
@@ -364,15 +363,35 @@ void qpdo_solve(QPDOWorkspace *work) {
             break; // problem solved
         }
 
-        // check infeasibility
-        if (is_primal_infeasible(work)) {
-            break;
-        } else if (is_dual_infeasible(work)) {
-            break;
-        }
-
         if (((iter > iter_old + 1) && check_inner_optimality(work)) || (iter == iter_old + work->settings->inner_max_iter)) {
             // subproblem solved or stopped
+
+            if (iter < iter_old + work->settings->inner_max_iter) {
+
+                if (work->settings->eps_prim_inf > 0) {
+                    // dy = y - ybar
+                    vec_add_scaled(work->y, work->ybar, work->dy, -1, m);
+                    // Atdy = A' * dy
+                    mat_tpose_vec(work->data->A, work->chol->dy, work->chol->Atdy, c);
+                    // check primal infeasibility
+                    if (is_primal_infeasible(work)) {
+                        break;
+                    }
+                }
+
+                if (work->settings->eps_dual_inf > 0) {
+                    // dx = x - xbar
+                    vec_add_scaled(work->x, work->xbar, work->dx, -1, n);
+                    // Qdx = Q * dx
+                    mat_vec(work->data->Q, work->chol->dx, work->chol->Qdx, c);
+                    // Adx = A * dx
+                    mat_vec(work->data->A, work->chol->dx, work->chol->Adx, c);
+                    // check dual infeasibility
+                    if (is_dual_infeasible(work)) {
+                        break;
+                    }
+                }
+            }
 
             // update iterate estimate
             prea_vec_copy(work->x, work->xbar, n);
@@ -389,7 +408,7 @@ void qpdo_solve(QPDOWorkspace *work) {
             if (iter < iter_old + work->settings->inner_max_iter) {
 
                 // update inner tolerance
-                work->eps_in = c_max( work->settings->rho * work->eps_in , 1e-14 );
+                work->eps_in = c_max( work->settings->rho * work->eps_in , work->settings->eps_abs );
 
                 #ifdef PRINTING
                 if ((work->settings->verbose) && (iter % work->settings->print_interval == 0)) {

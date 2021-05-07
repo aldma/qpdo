@@ -46,13 +46,15 @@ extern "C" {
 # define INNER_MAX_ITER (1e3)       /**< maximum number of inner iterations */
 # define EPS_ABS (1e-6)             /**< absolute tolerance */
 # define EPS_ABS_IN (1e0)           /**< inner absolute tolerance */
+# define EPS_PRIM_INF (1e-6)        /**< primal infeasibility tolerance */
+# define EPS_DUAL_INF (1e-6)        /**< dual infeasibility tolerance */
 # define RHO (0.1)                  /**< inner tolerance shrink factor */
-# define THETA (0.1)                /**< penalty update criterion parameter */
+# define THETA (0.25)               /**< penalty update criterion parameter */
 # define DELTA (1e-2)               /**< penalty update factor */
 # define MU_MIN (1e-8)              /**< penalty cap */
 
 # define PROXIMAL (TRUE)            /**< use primal regularization? */
-# define SIGMA_INIT (1e-1)          /**< initial primal regularization parameter */
+# define SIGMA_INIT (1e-3)          /**< initial primal regularization parameter */
 # define SIGMA_UPD (1e-1)           /**< primal regularization parameter shrink factor */
 # define SIGMA_MIN (1e-7)           /**< minimum primal regularization parameter */
 
@@ -64,7 +66,7 @@ extern "C" {
 # define PRINT_INTERVAL (1)         /**< print every .. iterations */
 
 # define RESET_NEWTON_ITER (100)    /**< re-factorize every .. iterations */
-# define MAX_RANK_UPDATE 160        /**< re-factorize if update rank is more than .. */
+# define MAX_RANK_UPDATE 100        /**< re-factorize if update rank is more than .. */
 
 # define EPS_PRIM_INF (1e-6)        /**< primal infeasibility tolerance */
 # define EPS_DUAL_INF (1e-6)        /**< dual infeasibility tolerance */

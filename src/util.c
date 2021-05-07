@@ -26,6 +26,8 @@ QPDOSettings* copy_settings(const QPDOSettings *settings) {
     new->inner_max_iter           = settings->inner_max_iter;
     new->eps_abs                  = settings->eps_abs;
     new->eps_abs_in               = settings->eps_abs_in;
+    new->eps_prim_inf             = settings->eps_prim_inf;
+    new->eps_dual_inf             = settings->eps_dual_inf;
     new->rho                      = settings->rho;
     new->theta                    = settings->theta;
     new->delta                    = settings->delta;
@@ -123,37 +125,33 @@ void print_final_message(QPDOWorkspace *work) {
     char buf[80];
     switch (work->info->status_val) {
         case QPDO_SOLVED:
-            snprintf(buf, 80, "| QPDO finished successfully.                                    |\n");
-            characters_box = strlen(buf);
-            c_print("%s", buf);
-            c_print("| primal residual: %5.4e,      primal tolerance: %5.4e |\n", work->info->res_prim_norm, work->settings->eps_abs);
-            c_print("| dual residual  : %5.4e,      dual tolerance  : %5.4e |\n", work->info->res_dual_norm, work->settings->eps_abs);
-            c_print("| objective value: %+-5.4e                                   |\n", work->info->objective);
+            snprintf(buf, 80, "| QPDO finished successfully.                                              |\n");
             break;
-        // case QPDO_DUAL_TERMINATED:
-        // case QPDO_PRIMAL_INFEASIBLE:
-        // case QPDO_DUAL_INFEASIBLE:
+        case QPDO_PRIMAL_INFEASIBLE:
+            snprintf(buf, 80, "| QPDO detected a primal infeasible problem.                               |\n");
+            break;
+        case QPDO_DUAL_INFEASIBLE:
+            snprintf(buf, 80, "| QPDO detected a dual infeasible problem.                                 |\n");
+            break;
+        case QPDO_PRIMAL_DUAL_INFEASIBLE:
+            snprintf(buf, 80, "| QPDO detected a primal-dual infeasible problem.                          |\n");
+            break;
         case QPDO_MAX_ITER_REACHED:
-            snprintf(buf, 80,"| QPDO hit the maximum number of iterations.                     |\n");
-            characters_box = strlen(buf);
-            c_print("%s", buf);
-            c_print("| primal residual: %5.4e,      primal tolerance: %5.4e |\n", work->info->res_prim_norm, work->settings->eps_abs);
-            c_print("| dual residual  : %5.4e,      dual tolerance  : %5.4e |\n", work->info->res_dual_norm, work->settings->eps_abs);
-            c_print("| objective value: %+-5.4e                                   |\n", work->info->objective);
+            snprintf(buf, 80, "| QPDO hit the maximum number of iterations.                               |\n");
             break;
         case QPDO_MAX_TIME_REACHED:
-            snprintf(buf, 80,"| QPDO has exceeded the specified time limit.                    |\n");
-            characters_box = strlen(buf);
-            c_print("%s", buf);
-            c_print("| primal residual: %5.4e,      primal tolerance: %5.4e |\n", work->info->res_prim_norm, work->settings->eps_abs);
-            c_print("| dual residual  : %5.4e,      dual tolerance  : %5.4e |\n", work->info->res_dual_norm, work->settings->eps_abs);
-            c_print("| objective value: %+-5.4e                                   |\n", work->info->objective);
+            snprintf(buf, 80, "| QPDO exceeded the specified time limit.                                  |\n");
             break;
         default:
             c_strcpy(work->info->status, "unrecognised status value");
             c_eprint("Unrecognised final status value %ld", work->info->status_val);
             return;
     }
+    characters_box = strlen(buf);
+    c_print("%s", buf);
+    c_print("| primal residual: %5.4e,                primal tolerance: %5.4e |\n", work->info->res_prim_norm, work->settings->eps_abs);
+    c_print("| dual residual  : %5.4e,                dual tolerance  : %5.4e |\n", work->info->res_dual_norm, work->settings->eps_abs);
+    c_print("| objective value: %+-5.4e                                             |\n", work->info->objective);
     #ifdef PROFILING
         size_t characters_runtime;
         if (work->info->run_time > 1.0) {
