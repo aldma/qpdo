@@ -51,7 +51,7 @@ extern "C" {
 # define RHO (0.1)                  /**< inner tolerance shrink factor */
 # define THETA (0.25)               /**< penalty update criterion parameter */
 # define DELTA (1e-2)               /**< penalty update factor */
-# define MU_MIN (1e-8)              /**< penalty cap */
+# define MU_MIN (1e-9)              /**< penalty cap */
 
 # define PROXIMAL (TRUE)            /**< use primal regularization? */
 # define SIGMA_INIT (1e-3)          /**< initial primal regularization parameter */
@@ -65,11 +65,8 @@ extern "C" {
 # define VERBOSE (TRUE)             /**< print infos? */
 # define PRINT_INTERVAL (1)         /**< print every .. iterations */
 
-# define RESET_NEWTON_ITER (100)    /**< re-factorize every .. iterations */
+# define RESET_NEWTON_ITER (1000)   /**< re-factorize every .. iterations */
 # define MAX_RANK_UPDATE 100        /**< re-factorize if update rank is more than .. */
-
-# define EPS_PRIM_INF (1e-6)        /**< primal infeasibility tolerance */
-# define EPS_DUAL_INF (1e-6)        /**< dual infeasibility tolerance */
 
 # ifdef __cplusplus
 }

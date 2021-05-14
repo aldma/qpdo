@@ -407,7 +407,7 @@ void qpdo_solve(QPDOWorkspace *work) {
             if (iter < iter_old + work->settings->inner_max_iter) {
 
                 // update inner tolerance
-                work->eps_in = c_max( work->settings->rho * work->eps_in , work->settings->eps_abs );
+                work->eps_in = c_max( work->settings->rho * work->eps_in , 0.1 * work->settings->eps_abs );
 
                 #ifdef PRINTING
                 if ((work->settings->verbose) && (iter % work->settings->print_interval == 0)) {
