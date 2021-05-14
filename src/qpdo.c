@@ -346,7 +346,6 @@ void qpdo_solve(QPDOWorkspace *work) {
         compute_outer_residuals(work, c);
         compute_outer_residuals_norm(work);
 
-
         // compute inner residuals and norm
         compute_inner_residuals(work, c);
         compute_inner_residuals_norm( work, c);
