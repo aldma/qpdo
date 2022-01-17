@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the article from the preferred-citation below."
+title: "QPDO: the Quadratic Primal-Dual Optimizer"
+authors:
+  - family-names: "De Marchi"
+    given-names: "Alberto"
+    orcid: "https://orcid.org/0000-0002-3545-6898"
+    affiliation: "Universität der Bundeswehr München"
+repository-code: "https://github.com/aldma/qpdo"
+type: software
+keywords:
+  - Convex Optimization
+  - Quadratic Programming
+
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "De Marchi"
+    given-names: "Alberto"
+  title: "On a primal-dual Newton proximal method for convex quadratic programs"
+  journal: "Computational Optimization and Applications"
+  year: 2022
+  doi: 10.1007/s10589-021-00342-y
+  url: https://doi.org/10.1007/s10589-021-00342-y
